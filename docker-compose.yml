@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  ai_service:
+    build: ./ai_service
+    container_name: ai_service
+
+  backend:
+    build: ./backend
+    container_name: backend
+    volumes:
+      - ./frontend/build:/app/static  # Serve built React UI
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ai_service
+      - qdrant
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+      - ai_service
+      - qdrant
+    # working_dir: /app
+    # volumes:
+    #   - ./frontend:/app
+    # command: ["npm", "run", "build"]
+    # environment:
+    #   - CI=true
+
+volumes:
+  qdrant_data:

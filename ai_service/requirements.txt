@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+httpx
+pydantic
+pydantic-settings
+python-dotenv
+openai
+python-multipart
+pytest
+pytest-asyncio
+
+qdrant-client
+pdfminer.six
