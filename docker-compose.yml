@@ -1,35 +1,14 @@
 version: "3.8"
 
 services:
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: qdrant
-    ports:
-      - "6333:6333"
-      - "6334:6334"
-    volumes:
-      - qdrant_data:/qdrant/storage
-
-  ai_service:
-    build: ./ai_service
-    container_name: ai_service
-
-  backend:
-    build: ./backend
-    container_name: backend
-    volumes:
-      - ./frontend/build:/app/static  # Serve built React UI
-    ports:
-      - "8000:8000"
-    depends_on:
-      - ai_service
-      - qdrant
 
   frontend:
     build: ./frontend
     container_name: frontend
     ports:
       - "8080:80"
+    volumes:
+      - ./frontend:/app:z
     depends_on:
       - backend
       - ai_service
@@ -41,5 +20,52 @@ services:
     # environment:
     #   - CI=true
 
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app:z
+    depends_on:
+      - ai_service
+      - qdrant
+
+  ai_service:
+    build: ./ai_service
+    container_name: ai_service
+    volumes:
+      - ./ai_service:/app:z
+    depends_on:
+      - redaction_gate
+
+  redaction_gate:
+    build: ./redaction_gate
+    volumes:
+      - ./redaction_gate:/app:z
+    depends_on:
+      - redaction_db
+    ports:
+      - "8002:8002"
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  redaction_db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: redaction
+      POSTGRES_USER: redact
+      POSTGRES_PASSWORD: redact
+    volumes:
+      - redaction_db_data:/var/lib/postgresql/data
+
 volumes:
   qdrant_data:
+  redaction_db_data:

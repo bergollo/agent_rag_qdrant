@@ -6,11 +6,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend app code
-COPY ./app ./app
+# COPY ./app ./app
 
 # static files will be mounted at /app/static by docker-compose (named volume)
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+
+RUN [ -f .env ] || printf "" > .env
 
 # uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]

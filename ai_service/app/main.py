@@ -1,4 +1,6 @@
 """FastAPI application entrypoint for the AI microservice."""
+import logging
+import sys
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,6 +12,14 @@ from app.api.routers import health, llm, vectorstore
 def create_app() -> FastAPI:
     """Create and configure the FastAPI app with routers and middleware."""
     settings = get_settings()
+
+    LOG_LEVEL = logging.INFO
+    logging.basicConfig(
+        level=LOG_LEVEL,
+        format="BERGO - [%(levelname)s] %(name)s:-> %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+    
     app = FastAPI(title=settings.APP_NAME)
 
     app.add_middleware(

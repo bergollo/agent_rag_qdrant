@@ -28,7 +28,7 @@ Notes:
 
 ---
 
-MCP Monorepo project structure with AI service, FastAPI, and React UI
+MCP Monorepo project structure with AI service, FastAPI, Redaction Gate MCP, and React UI
 
 - A Python AI service (e.g., using LangChain/OpenAI)
 - A Python FastAPI backend (providing API endpoints)
@@ -36,6 +36,10 @@ MCP Monorepo project structure with AI service, FastAPI, and React UI
 
 ```
 agent_rag_qdrant/
+│
+├── .github/
+│   └── workflow/
+│       └── github-actions.yml
 │
 ├── ai_service/                # Python AI service (LangChain/OpenAI logic)
 │   ├── main.py
@@ -52,6 +56,11 @@ agent_rag_qdrant/
 │   ├── public/
 │   └── src/
 │
+├── redaction_gate/                # Python Redact FastMCP/FastAPI
+│   ├── main.py
+│   ├── requirements.txt
+│   └── ... (other modules)
+│
 ├── docker-compose.yml
 └── README.md
 ```
@@ -62,6 +71,7 @@ agent_rag_qdrant/
 - `backend/`: FastAPI app, can serve API endpoints.
 - `frontend/`: React app (created with Create React App, Vite, or similar).
 - docker-compose.yml: Orchestrates all services (Qdrant, AI service, FastAPI backend, React frontend in NGINX).
+- `redaction_gate/`: FastMCP service, can serve MCP.
 
 **Key Points:**
 - The `frontend` service builds the React app and outputs to `frontend/build`.
