@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+asyncpg
+mcp
+pydantic
+starlette
+aiosqlite
+
+pytest
+pytest-asyncio

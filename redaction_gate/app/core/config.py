@@ -8,18 +8,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings(BaseSettings):
-    APP_NAME: str = "AI Service Stub"
+    APP_NAME: str = "MCP Redaction Gate"
     ENV: str = "development"
     HOST: str = "0.0.0.0"
-    PORT: int = 8001
+    PORT: int = 8002
 
-    # Get the OpenAI API key from the environment
-    OPENAI_API_KEY: str | None = None
-    QDRANT_URL: str = "http://qdrant:6333"
-
-    REDACTION_GATE_URL: str = "http://redaction_gate:8002/mcp/mcp"
     REDACTION_GATE_TOKEN: str = "dev-token"
-    MCP_TIMEOUT_S:float = 5.0
+    REDACTION_POLICY_VERSION: str = "v0"
+
+    DATABASE_URL: str = "postgresql+asyncpg://redact:redact@redaction_db:5432/redaction"
 
     model_config = ConfigDict(
         env_file = ".env",

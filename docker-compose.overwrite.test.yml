@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  frontend:
+    environment:
+      CI: "true"
+    command: ["npm", "run", "test:e2e"]
+
+  backend:
+    command: ["pytest", "tests"]
+
+  ai_service:
+    command: ["pytest", "tests"]
+
+  redaction_gate:
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:///tmp/redaction_gate_test.temp.db
+    command: ["pytest", "tests"]
+    depends_on:
+      - qdrant
+    volumes:
+      - /tmp/redaction_gate_test.temp.db:/tmp/redaction_gate_test.temp.db
+
+  qdrant:
+    command: ["sleep", "infinity"]
+
+  redaction_db:
+    command: ["sleep", "infinity"]
