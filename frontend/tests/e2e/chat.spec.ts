@@ -8,15 +8,15 @@ test.describe('Chat flow', () => {
     await page.route('**/api/**', async (route) => {
       const url = route.request().url();
 
-      if (url.endsWith('/api/health')) {
+      if (url.endsWith('/api/healthz')) {
         return route.fulfill({
           status: 200,
           contentType: 'application/json',
-          body: JSON.stringify({ status: 'ok' }),
+          body: JSON.stringify({ status: 'ok', service: 'backend' }),
         });
       }
 
-      if (url.endsWith('/api/ai/health')) {
+      if (url.endsWith('/api/ai/healthz')) {
         return route.fulfill({
           status: 200,
           contentType: 'application/json',

@@ -6,6 +6,6 @@ router = APIRouter()
 
 
 @router.get("")
-async def health_check() -> dict[str, str]:
+async def ping_check() -> dict[str, str]:
     """Return a simple status payload for uptime checks."""
-    return {"status": "ok"}
+    return {"status": "ok", "service": "backend"}

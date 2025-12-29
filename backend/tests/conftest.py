@@ -19,7 +19,7 @@ class StubAIClient:
         self.uploaded_files: list[str] = []
         self.queries: list[str] = []
 
-    async def health_check(self) -> Dict[str, str]:
+    async def ping_check(self) -> Dict[str, str]:
         self.health_called = True
         return {"status": "ok", "service": "ai_service"}
 

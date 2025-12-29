@@ -23,11 +23,11 @@ class QueryResponse(BaseModel):
     answer: str
 
 
-@router.get("/health")
-async def health_check(ai_client: AIClient = Depends(get_ai_client)) -> Dict[str, Any]:
+@router.get("/healthz")
+async def ping_check(ai_client: AIClient = Depends(get_ai_client)) -> Dict[str, Any]:
     """Check that the downstream ai_service is reachable."""
     try:
-        return await ai_client.health_check()
+        return await ai_client.ping_check()
     except Exception as exc:  # pragma: no cover - defensive HTTP mapping
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 

@@ -29,7 +29,6 @@ class SendWebhookArgs(BaseModel):
     ),
 )
 async def safe_send_webhook(request_id: str, actor: Dict[str, Any], url: str, text: str, metadata: Dict[str, Any] | None = None):
-    print(f"safe_send_webhook called with url: {url}")  # Debug statement
     # 1) allowlist destination
     host = httpx.URL(url).host
     if host not in ALLOWED_WEBHOOK_HOSTS:
@@ -64,7 +63,6 @@ class StoreMemoryArgs(BaseModel):
     ),
 )
 async def safe_store_memory(request_id: str, actor: Dict[str, Any], key: str, value: str, scope: str = "user"):
-    print(f"safe_store_memory called with key: {key}, scope: {scope}")  # Debug statement
     # 1) redact before storing
     redacted = await ensure_redacted(request_id=request_id, actor=actor, text=value, purpose="memory")
 

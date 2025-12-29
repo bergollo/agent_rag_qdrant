@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
-from app.api.routers import health, llm, vectorstore
+from app.api.routers import ping, llm, vectorstore
 
 
 def create_app() -> FastAPI:
@@ -16,11 +16,11 @@ def create_app() -> FastAPI:
     LOG_LEVEL = logging.INFO
     logging.basicConfig(
         level=LOG_LEVEL,
-        format="BERGO - [%(levelname)s] %(name)s:-> %(message)s",
+        format="LOG - [%(levelname)s] %(name)s:-> %(message)s",
         handlers=[logging.StreamHandler(sys.stdout)],
     )
     
-    app = FastAPI(title=settings.APP_NAME)
+    app = FastAPI(title=settings.AI_SERVICE_APP_NAME)
 
     app.add_middleware(
         CORSMiddleware,
@@ -29,7 +29,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    app.include_router(health.router, prefix="/health", tags=["health"])
+    app.include_router(ping.router, prefix="/healthz", tags=["healthz"])
     app.include_router(vectorstore.router, prefix="/v1/vectorstore", tags=["vector"])
     app.include_router(llm.router, prefix="/v1/query", tags=["ai"])
 

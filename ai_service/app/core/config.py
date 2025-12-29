@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings(BaseSettings):
-    APP_NAME: str = "AI Service Stub"
-    ENV: str = "development"
-    HOST: str = "0.0.0.0"
-    PORT: int = 8001
+    AI_SERVICE_APP_NAME: str = "AI Service Stub"
+    AI_SERVICE_ENV: str = "development"
+    AI_SERVICE_HOST: str = "0.0.0.0"
+    AI_SERVICE_PORT: int = 8001
 
     # Get the OpenAI API key from the environment
     OPENAI_API_KEY: str | None = None

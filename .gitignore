@@ -1,19 +1,28 @@
 
+# Python Virtual Environments
+venv/
 **/.venv
 __pycache__/
 *.pyc
-
-**/.env
 
 # Miscellaneous Files
 .DS_Store
 *.log
 *temp*
 docs/*.temp.md
+**/.env
+**/.env.prod
 
+# IDE Files
 .vscode/
 .idea/
 
+# Build Files
 build/
 dist/
 
+# Terraform Files
+infra/.terraform/
+infra/.terraform.lock.hcl
+infra/terraform.tfstate
+infra/terraform.tfstate.backup

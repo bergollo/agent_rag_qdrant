@@ -38,8 +38,6 @@ import json
 
 class OpenAIClient:
     def __init__(self, openai_api_key: str, qdrant_url: Optional[str] = None):
-        print("Initializing OpenAIClient")
-        print(f"OpenAI API Key: {openai_api_key}")
         if not openai_api_key:
             raise ValueError("OpenAI API key is not set")
 
@@ -84,7 +82,6 @@ class OpenAIClient:
         """
         Execute a tool requested by the LLM and return a STRING for the OpenAI "tool" message.
         """
-        print(f"Executing tool call: {tool_name} with args: {tool_args}")
         tool: BaseTool | None = getattr(self, "_tool_impls", {}).get(tool_name)
         if tool is None:
             # Return an error payload instead of raising (model can recover)

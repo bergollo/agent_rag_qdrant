@@ -7,7 +7,7 @@ from pathlib import Path
 
 def test_ai_health_forwards_call(api_client):
     client, stub = api_client
-    resp = client.get("/api/ai/health")
+    resp = client.get("/api/ai/healthz")
     assert resp.status_code == 200
     assert resp.json() == {"status": "ok", "service": "ai_service"}
     assert stub.health_called

@@ -5,7 +5,7 @@ This package contains the React UI that talks to the FastAPI backend and AI serv
 
 ## Features
 - Chat workspace backed by Redux Toolkit with optimistic user messages, AI streaming placeholder handling, and localStorage persistence for refreshing without losing context.
-- Connection indicator that pings the backend (`/api/health`) and the AI service (`/api/ai/health`) on load and on demand.
+- Connection indicator that pings the backend (`/api/healthz`) and the AI service (`/api/ai/healthz`) on load and on demand.
 - Document uploader wired to `/api/ai/vectorstore/upload` so users can push PDFs/text files to Qdrant before chatting.
 - Tailwind 4 utility styling, Lucide icons, React Router (single route today), and Playwright end-to-end tests.
 
@@ -73,8 +73,8 @@ frontend/
 
 
 ## API expectations
-- `GET /api/health` – backend readiness check (used by the connection widget).
-- `GET /api/ai/health` – AI service health (same widget).
+- `GET /api/healthz` – backend readiness check (used by the connection widget).
+- `GET /api/ai/healthz` – AI service health (same widget).
 - `POST /api/ai/query` – accepts `{ query: string }` and returns `{ id, answer | result }`.
 - `POST /api/ai/vectorstore/upload` – expects multipart form-data with `file`.
 

@@ -19,7 +19,7 @@ def register_mcp_tools(mcp_server: FastMCP):
     @mcp_server.tool(description="Redact common PII/secrets from text before storing/sending.")
     async def redact_text(payload: dict) -> dict:
         logger.info("MCP redact_text called")
-        logger.info("text= %s", payload.get("text", "")[:50])  # Log first 50 chars of text
+        # logger.info("text= %s", payload.get("text", "")[:50])  # Log first 50 chars of text
 
         data = RedactTextIn(**payload)
 
@@ -40,7 +40,6 @@ def register_mcp_tools(mcp_server: FastMCP):
             ))
             await session.commit()
 
-        print("data.text:", data.text)  # Debug statement
         out = RedactTextOut(
             redacted_text=redacted,
             redactions=[
@@ -56,9 +55,7 @@ def register_mcp_tools(mcp_server: FastMCP):
 
     @mcp_server.tool(description="Classify sensitivity level (low/medium/high) based on detected PII/secrets.")
     async def classify_sensitivity(payload: dict) -> dict:
-
-        print("Payload received for classify_sensitivity:", payload)  # Debug statement
-
+        logger.info("MCP classify_sensitivity called")
         data = ClassifySensitivityIn(**payload)
         findings = find_pii(data.text)
         _, counts = apply_redactions(data.text, findings)

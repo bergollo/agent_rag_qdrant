@@ -26,3 +26,5 @@ services:
 
   redaction_db:
     command: ["sleep", "infinity"]
+
+# docker compose -f docker-compose.yml -f docker-compose.overwrite.test.yml up --build

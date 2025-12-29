@@ -2,7 +2,7 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
-import { fetchBackendHC, fetchAiHC } from "../../services/health-check";
+import { fetchBackendHC, fetchAiHC } from "../../services/healthz-check";
 
 export type StatusType = 'unknown' | 'idle' | 'loading' | 'succeeded' | 'failed';
 

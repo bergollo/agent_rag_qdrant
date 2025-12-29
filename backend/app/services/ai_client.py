@@ -13,9 +13,9 @@ class AIClient:
         self.base_url = base_url
         self._client = httpx.AsyncClient(base_url=base_url, timeout=timeout)
 
-    async def health_check(self) -> Dict[str, Any]:
-        """Call the ai_service health endpoint."""
-        resp = await self._client.get("/health/")
+    async def ping_check(self) -> Dict[str, Any]:
+        """Call the ai_service healthz endpoint."""
+        resp = await self._client.get("/healthz/")
         resp.raise_for_status()
         return resp.json()
 

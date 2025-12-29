@@ -34,7 +34,7 @@ def create_app() -> FastAPI:
     LOG_LEVEL = logging.INFO
     logging.basicConfig(
         level=LOG_LEVEL,
-        format="BERGO - [%(levelname)s] %(name)s:-> %(message)s",
+        format="LOG - [%(levelname)s] %(name)s:-> %(message)s",
         handlers=[logging.StreamHandler(sys.stdout)],
     )
 
@@ -74,8 +74,8 @@ def create_app() -> FastAPI:
     app.mount("/mcp", mcp_app)
 
     @app.get("/healthz")
-    def healthz():
-        return {"ok": True}
+    def ping_check():
+        return {"status": "ok", "service": "redaction_gate"}
 
     return app
 

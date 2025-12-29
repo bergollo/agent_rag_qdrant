@@ -41,7 +41,7 @@ Environment variables (loaded through `pydantic-settings`):
 | `docker build -t ai_service .` | Build the production image (used in Compose). |
 
 ## API surface
-- `GET /health/` – readiness probe used by the backend proxy.
+- `GET /healthz/` – readiness probe used by the backend proxy.
 - `POST /v1/vectorstore/upload` – accepts `multipart/form-data` (`file`) and stores embeddings/payloads in Qdrant.
 - `POST /v1/query/` – body `{ "query": "..." }`; performs semantic search + OpenAI completion and returns `{ "answer": "..." }`.
 

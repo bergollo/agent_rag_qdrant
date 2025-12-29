@@ -7,8 +7,6 @@ services:
     container_name: frontend
     ports:
       - "8080:80"
-    volumes:
-      - ./frontend:/app:z
     depends_on:
       - backend
       - ai_service
@@ -25,8 +23,6 @@ services:
     container_name: backend
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/app:z
     depends_on:
       - ai_service
       - qdrant
@@ -34,8 +30,6 @@ services:
   ai_service:
     build: ./ai_service
     container_name: ai_service
-    volumes:
-      - ./ai_service:/app:z
     depends_on:
       - redaction_gate
 
@@ -69,3 +63,5 @@ services:
 volumes:
   qdrant_data:
   redaction_db_data:
+
+# docker compose up --env-file .env.prod -d --build

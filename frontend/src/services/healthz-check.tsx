@@ -7,7 +7,7 @@ export const fetchAiHC = async (): Promise<Response> => {
     const id = setTimeout(() => controller.abort(), 3000);
 
     try {
-        const response = await fetch(`${config.API_BASE_URL}/api/ai/health`,
+        const response = await fetch(`${config.API_BASE_URL}/api/ai/healthz`,
         { signal: controller.signal });
         clearTimeout(id);
         if (!response.ok) {
@@ -27,7 +27,7 @@ export const fetchBackendHC = async (): Promise<Response> => {
 
     try {
         console.log(config)
-        const response = await fetch(`${config.API_BASE_URL}/api/health`,
+        const response = await fetch(`${config.API_BASE_URL}/api/healthz`,
             { signal: controller.signal });
         clearTimeout(id);
         if (!response.ok) {

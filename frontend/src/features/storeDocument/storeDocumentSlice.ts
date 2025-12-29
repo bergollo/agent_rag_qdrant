@@ -26,7 +26,6 @@ export const upload = createAsyncThunk<
   "storeDocument/upload",
   async (document) => {
     // Example: replace with RTK Query or your real API
-    console.log("Bergo")
     const response = await uploadDocument(document);
     if (!response.ok) throw new Error("Failed to load messages");
     return;

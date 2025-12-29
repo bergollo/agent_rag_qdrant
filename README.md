@@ -11,12 +11,16 @@ Quickstart: MCP example with Qdrant, ai_service (stub), backend (FastAPI), front
 
 2) Services
    - Backend (FastAPI): http://localhost:8000
-     - Health: http://localhost:8000/api/health/
+     - Health: http://localhost:8000/api/healthz/
      - AI endpoint: http://localhost:8000/api/ai/query (POST)
 
    - AI Service (stub): http://localhost:8001
-     - Health: http://localhost:8001/health
+     - Health: http://localhost:8001/healthz
      - Query: http://localhost:8001/v1/query (POST)
+
+   - Redact MCP Service (FastMCP): http://localhost:8002
+     - Health: http://localhost:8002/healthz
+     - Query: http://localhost:8002/mcp/mcp (POST)
 
    - Qdrant: http://localhost:6333 (used in stub)
 

@@ -41,8 +41,8 @@ Environment variables (loaded through `pydantic-settings`):
 | `docker build -t backend .` | Build the backend container image (used by Compose). |
 
 ## API surface
-- `GET /api/health` – backend readiness probe.
-- `GET /api/ai/health` – proxies the downstream AI service health check.
+- `GET /api/healthz` – backend readiness probe.
+- `GET /api/ai/healthz` – proxies the downstream AI service health check.
 - `POST /api/ai/vectorstore/upload` – forwards `multipart/form-data` uploads to the AI service for ingestion.
 - `POST /api/ai/query` – body `{ "query": "..." }`; returns `{ "answer": "..." }` supplied by the AI service.
 
@@ -65,7 +65,7 @@ backend/
 
 ## Troubleshooting
 - **CORS errors in the browser:** update the allowed origins list in `app/main.py` when deploying to non-localhost domains.
-- **500 from `/api/ai/*`:** verify `ai_service` is reachable (check `docker compose ps` or hit `http://localhost:8001/health` directly).
+- **500 from `/api/ai/*`:** verify `ai_service` is reachable (check `docker compose ps` or hit `http://localhost:8001/healthz` directly).
 - **File uploads fail instantly:** FastAPI reads the file into memory before proxying; large files may need adjusted limits or chunked ingestion in future iterations.
 
 Run this service together with `ai_service` and the frontend via `docker compose up --build` from the repo root to exercise the entire RAG workflow.

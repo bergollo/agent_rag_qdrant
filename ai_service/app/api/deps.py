@@ -12,8 +12,6 @@ def get_settings_dep():
 def get_openai_client() -> OpenAIClient:
     """Instantiate an OpenAIClient bound to configured OpenAI + Qdrant credentials."""
     settings = get_settings_dep()
-    print("Getting OpenAI client with settings:")
-    print(f"OPENAI_API_KEY: {settings.OPENAI_API_KEY}")
     return OpenAIClient(
         openai_api_key=settings.OPENAI_API_KEY,
         qdrant_url=settings.QDRANT_URL,
