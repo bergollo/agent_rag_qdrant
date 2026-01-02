@@ -11,7 +11,7 @@ from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 
 from .tools.redact_tools import register_mcp_tools
-from .db import engine
+# from .db import engine
 from .models import Base
 
 from .core.deps import mcp_auth_middleware
@@ -58,8 +58,8 @@ def create_app() -> FastAPI:
     @contextlib.asynccontextmanager
     async def lifespan(app: FastAPI):
         # Your DB startup
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+        # async with engine.begin() as conn:
+        #     await conn.run_sync(Base.metadata.create_all)
 
         # MCP session manager lifecycle (recommended even in many stateless setups)
         # See "mount multiple servers" example pattern in MCP docs. :contentReference[oaicite:3]{index=3}
