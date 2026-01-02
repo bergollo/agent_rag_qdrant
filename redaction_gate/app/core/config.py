@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "MCP Redaction Gate"
     ENV: str = "development"
     HOST: str = "0.0.0.0"
-    PORT: int = 8002
+    PORT: int = 8080
 
     REDACTION_GATE_TOKEN: str = "dev-token"
     REDACTION_POLICY_VERSION: str = "v0"

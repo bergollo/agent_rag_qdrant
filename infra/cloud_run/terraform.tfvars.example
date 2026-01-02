@@ -1,0 +1,7 @@
+project_id            = "rag-stack-chatbot"
+region                = "us-central1"
+gar_repo              = "agent-rag"
+zone                  = "us-central1-a"
+
+openai_api_key        = "replace-with-your-key"
+redaction_db_password = "replace-with-your-key"
