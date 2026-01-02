@@ -20,7 +20,7 @@ def create_app() -> FastAPI:
         handlers=[logging.StreamHandler(sys.stdout)],
     )
     
-    app = FastAPI(title=settings.AI_SERVICE_APP_NAME)
+    app = FastAPI(title=settings.AI_SERVICE_NAME)
 
     app.add_middleware(
         CORSMiddleware,

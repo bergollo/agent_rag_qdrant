@@ -8,15 +8,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings(BaseSettings):
-    APP_NAME: str = "MCP Redaction Gate"
-    ENV: str = "development"
-    HOST: str = "0.0.0.0"
-    PORT: int = 8002
+    REDACTION_GATE_NAME: str = "MCP Redaction Gate"
+    REDACTION_GATE_ENV: str = "production"
+    REDACTION_GATE_HOST: str = "0.0.0.0"
+    REDACTION_GATE_PORT: int = 8080
 
     REDACTION_GATE_TOKEN: str = "dev-token"
     REDACTION_POLICY_VERSION: str = "v0"
 
-    DATABASE_URL: str = "postgresql+asyncpg://redact:redact@redaction_db:5432/redaction"
+    REDACTION_DB_URL: str = "postgresql+asyncpg://redact:redact@redaction_db:5432/redaction"
 
     model_config = ConfigDict(
         env_file = ".env",

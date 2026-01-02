@@ -1,10 +1,14 @@
-version: "3.8"
+#  docker-compose.prod.yml
 
 services:
   frontend:
     image: ${GAR_HOST}/${PROJECT_ID}/${GAR_REPO}/frontend:${TAG}
+    environment:
+      NODE_ENV: production
+      BACKEND_PORT: 8080
+      # BACKEND_URL: http://backend:8080
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - backend
       - ai_service
@@ -12,21 +16,29 @@ services:
 
   backend:
     image: ${GAR_HOST}/${PROJECT_ID}/${GAR_REPO}/backend:${TAG}
-    ports:
-      - "8000:8000"
     environment:
-      # example internal URLs
-      AI_SERVICE_URL: http://ai_service:8001
+      NODE_ENV: production
+      BACKEND_PORT: 8080
+      AI_SERVICE_URL: http://ai_service:8080
       QDRANT_URL: http://qdrant:6333
+    ports:
+      - "8000:8080"
     depends_on:
-      - qdrant
       - ai_service
+      - qdrant
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/healthz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   ai_service:
     image: ${GAR_HOST}/${PROJECT_ID}/${GAR_REPO}/ai_service:${TAG}
+    ports:
+      - "8001:8080"
     environment:
-      REDACTION_URL: http://redaction_gate:8002
+      REDACTION_URL: http://redaction_gate:8080
       QDRANT_URL: http://qdrant:6333
       # OPENAI_API_KEY should come from env on VM, not committed
       OPENAI_API_KEY: ${OPENAI_API_KEY}
@@ -38,9 +50,9 @@ services:
   redaction_gate:
     image: ${GAR_HOST}/${PROJECT_ID}/${GAR_REPO}/redaction_gate:${TAG}
     ports:
-      - "8002:8002"
+      - "8002:8080"
     environment:
-      DATABASE_URL: postgresql://redact:${REDACTION_DB_PASSWORD}@redaction_db:5432/redaction
+      REDACTION_DB_URL: postgresql://redact:${REDACTION_DB_PASSWORD}@redaction_db:5432/redaction
     depends_on:
       - redaction_db
     restart: unless-stopped

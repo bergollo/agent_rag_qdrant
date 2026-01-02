@@ -6,7 +6,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 8001
+EXPOSE 8080
 
 # uvicorn app.main:app --host 0.0.0.0 --port 8002 --reload
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload", "--port", "8002"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload", "--port", "8080"]

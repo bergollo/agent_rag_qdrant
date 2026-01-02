@@ -16,6 +16,10 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built static files from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy custom nginx config (for SPA routing)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf.cloudrun /etc/nginx/templates/default.conf.template
+
+CMD ["sh", "-c", "envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

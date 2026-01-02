@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
 
 # Use a local sqlite database for fast, isolated test runs.
 TEST_DB_PATH = ROOT / "test_redaction_gate.temp.db"
-os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{TEST_DB_PATH}"
+os.environ["REDACTION_DB_URL"] = f"sqlite+aiosqlite:///{TEST_DB_PATH}"
 
 import app.db as db  # noqa: E402
 import app.models as models  # noqa: E402

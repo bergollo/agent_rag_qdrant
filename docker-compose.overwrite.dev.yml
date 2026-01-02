@@ -1,4 +1,4 @@
-version: "3.8"
+#  docker-compose.overwrite.dev.yml
 
 services:
   frontend:
@@ -7,16 +7,15 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     # mount source for live editing but keep container node_modules
-    volumes:
-      - ./frontend:/app:cached
-      - /app/node_modules
     ports:
       - "3000:5173"
     volumes:
       - ./frontend:/app:z
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - NODE_ENV=development
+      # CHOKIDAR_USEPOLLING: true
+      NODE_ENV: development
+      BACKEND_URL: http://backend:8080
+      VITE_API_BASE_URL: http://backend:8080
     stdin_open: true
     tty: true
 
@@ -26,7 +25,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: backend
     ports:
-      - "8000:8000"
+      - "8000:8080"
     volumes:
       - ./backend:/app:z
     environment:
@@ -38,7 +37,7 @@ services:
       context: ./ai_service
       dockerfile: Dockerfile.dev
     ports:
-      - "8001:8001"
+      - "8001:8080"
     volumes:
       - ./ai_service:/app:z
     environment:
@@ -50,17 +49,17 @@ services:
       context: ./redaction_gate
       dockerfile: Dockerfile.dev
     ports:
-      - "8002:8002"
+      - "8002:8080"
     volumes:
       - ./redaction_gate:/app:z
     environment:
       - ENV:development
       - DEBUG:True
     # healthcheck:
-    #   test: ["CMD", "curl", "-fsS", "http://localhost:8002/healthz"]
+    #   test: ["CMD", "curl", "-fsS", "http://localhost:8080/healthz"]
     #   interval: 10s
     #   timeout: 3s
     #   retries: 10
 
-# docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml up -d --build
+# docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml --env-file .env.prod up -d --build
 # docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml down

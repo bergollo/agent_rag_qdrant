@@ -1,16 +1,15 @@
-FROM python:3.11-slim
+# Stage 1: Development Build
+FROM node:20-alpine AS runtime
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY package*.json ./
+RUN npm install
 
-# Copy backend app code
-COPY ./app ./app
+COPY . .
+ENV NODE_ENV=production
+ENV PORT=8080
 
-# static files will be mounted at /app/static by docker-compose (named volume)
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
+EXPOSE 8080
 
-# uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--reload"]
+CMD ["npm", "run", "start:dev"]

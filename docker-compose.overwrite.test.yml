@@ -1,4 +1,4 @@
-version: "3.8"
+#  docker-compose.overwrite.test.yml
 
 services:
   frontend:
@@ -7,14 +7,14 @@ services:
     command: ["npm", "run", "test:e2e"]
 
   backend:
-    command: ["pytest", "tests"]
+    command: ["npm", "run", "test"]
 
   ai_service:
     command: ["pytest", "tests"]
 
   redaction_gate:
     environment:
-      DATABASE_URL: sqlite+aiosqlite:///tmp/redaction_gate_test.temp.db
+      REDACTION_DB_URL: sqlite+aiosqlite:///tmp/redaction_gate_test.temp.db
     command: ["pytest", "tests"]
     depends_on:
       - qdrant

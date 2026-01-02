@@ -1,71 +1,98 @@
-# Agent RAG Qdrant Backend
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-FastAPI gateway that fronts the Agent RAG Qdrant stack. It exposes `/api/*` routes consumed by the Vite frontend, proxies AI calls to the `ai_service`, and offers a place to mount the compiled React app for production deployments.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## Features
-- Router set for health checks, AI query forwarding, and document uploads that feed the vectorstore.
-- Async `AIClient` built on httpx for delegating work to the AI microservice while handling file uploads and error propagation.
-- Centralized configuration via `pydantic-settings`, making Docker/Compose overrides straightforward.
-- CORS middleware enabled for local development; tighten in production by whitelisting frontend origins.
-- Pytest coverage for routers and the HTTP client to guard against regressions.
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Requirements
-- Python 3.11+
-- Running `ai_service` instance (Docker Compose provides it on `http://ai_service:8001`).
-- Optional: built frontend in `backend/static` if you want the backend to serve UI assets.
-- Docker recommended for parity with the rest of the stack.
+## Description
 
-## Setup
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Project setup
 
 ```bash
-cd backend
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env  # create one if you need overrides
+$ npm install
 ```
 
-Environment variables (loaded through `pydantic-settings`):
+## Compile and run the project
 
-| Variable | Description | Default |
-| --- | --- | --- |
-| `APP_NAME` | FastAPI title | `MCP Backend` |
-| `HOST` / `PORT` | Uvicorn bind address | `0.0.0.0` / `8000` |
-| `AI_SERVICE_URL` | Base URL of the AI microservice | `http://ai_service:8001` |
-| `QDRANT_URL` | Reserved for future direct DB calls | `http://qdrant:6333` |
+```bash
+# development
+$ npm run start
 
-## Scripts
-| Command | Description |
-| --- | --- |
-| `uvicorn app.main:app --reload --port 8000` | Run the API locally with auto-reload. |
-| `pytest` | Execute backend unit tests. |
-| `docker build -t backend .` | Build the backend container image (used by Compose). |
+# watch mode
+$ npm run start:dev
 
-## API surface
-- `GET /api/healthz` – backend readiness probe.
-- `GET /api/ai/healthz` – proxies the downstream AI service health check.
-- `POST /api/ai/vectorstore/upload` – forwards `multipart/form-data` uploads to the AI service for ingestion.
-- `POST /api/ai/query` – body `{ "query": "..." }`; returns `{ "answer": "..." }` supplied by the AI service.
-
-## Project layout
-
-```
-backend/
-├── app/
-│   ├── core/config.py        # Settings + env handling
-│   ├── api/
-│   │   ├── deps.py           # FastAPI dependencies (settings, AI client)
-│   │   └── routers/          # health + ai proxy routes
-│   ├── services/ai_client.py # httpx wrapper for ai_service
-│   └── main.py               # FastAPI factory + middleware
-├── static/                   # Optional mount point for built frontend assets
-├── tests/                    # pytest suites for routers + services
-├── requirements.txt
-└── Dockerfile(.dev)
+# production mode
+$ npm run start:prod
 ```
 
-## Troubleshooting
-- **CORS errors in the browser:** update the allowed origins list in `app/main.py` when deploying to non-localhost domains.
-- **500 from `/api/ai/*`:** verify `ai_service` is reachable (check `docker compose ps` or hit `http://localhost:8001/healthz` directly).
-- **File uploads fail instantly:** FastAPI reads the file into memory before proxying; large files may need adjusted limits or chunked ingestion in future iterations.
+## Run tests
 
-Run this service together with `ai_service` and the frontend via `docker compose up --build` from the repo root to exercise the entire RAG workflow.
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

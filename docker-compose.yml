@@ -1,4 +1,4 @@
-version: "3.8"
+#  docker-compose.yml
 
 services:
 
@@ -6,30 +6,38 @@ services:
     build: ./frontend
     container_name: frontend
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - backend
       - ai_service
       - qdrant
-    # working_dir: /app
-    # volumes:
-    #   - ./frontend:/app
-    # command: ["npm", "run", "build"]
-    # environment:
-    #   - CI=true
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: backend:latest
     container_name: backend
+    environment:
+      NODE_ENV: production
+      BACKEND_PORT: 8080
     ports:
-      - "8000:8000"
+      - "8000:8080"
     depends_on:
       - ai_service
       - qdrant
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/healthz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   ai_service:
     build: ./ai_service
     container_name: ai_service
+    ports:
+      - "8001:8080"
     depends_on:
       - redaction_gate
 
@@ -37,10 +45,10 @@ services:
     build: ./redaction_gate
     volumes:
       - ./redaction_gate:/app:z
+    ports:
+      - "8002:8080"
     depends_on:
       - redaction_db
-    ports:
-      - "8002:8002"
 
   qdrant:
     image: qdrant/qdrant:latest
@@ -64,4 +72,4 @@ volumes:
   qdrant_data:
   redaction_db_data:
 
-# docker compose up --env-file .env.prod -d --build
+# docker compose --env-file .env.prod up -d --build

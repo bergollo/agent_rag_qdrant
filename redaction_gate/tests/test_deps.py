@@ -14,7 +14,7 @@ def test_require_bearer_missing_header():
 
 def test_require_bearer_invalid_token(monkeypatch):
     monkeypatch.setenv("REDACTION_GATE_TOKEN", "expected")
-    monkeypatch.setenv("DATABASE_URL", os.environ["DATABASE_URL"])
+    monkeypatch.setenv("REDACTION_DB_URL", os.environ["REDACTION_DB_URL"])
 
     with pytest.raises(HTTPException) as exc:
         deps.require_bearer("Bearer nope")
@@ -24,6 +24,6 @@ def test_require_bearer_invalid_token(monkeypatch):
 def test_require_bearer_valid_token(monkeypatch):
     token = "expected"
     monkeypatch.setenv("REDACTION_GATE_TOKEN", token)
-    monkeypatch.setenv("DATABASE_URL", os.environ["DATABASE_URL"])
+    monkeypatch.setenv("REDACTION_DB_URL", os.environ["REDACTION_DB_URL"])
 
     assert deps.require_bearer(f"Bearer {token}") is None

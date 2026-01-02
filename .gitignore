@@ -22,7 +22,21 @@ build/
 dist/
 
 # Terraform Files
-infra/.terraform/
-infra/.terraform.lock.hcl
-infra/terraform.tfstate
-infra/terraform.tfstate.backup
+infra/google_artifact_registry/.terraform/
+infra/google_artifact_registry/.terraform.lock.hcl
+infra/google_artifact_registry/terraform.tfstate
+infra/google_artifact_registry/terraform.tfvars
+infra/google_artifact_registry/terraform.tfstate.backup
+
+infra/compute_vm/.terraform/
+infra/compute_vm/.terraform.lock.hcl
+infra/compute_vm/terraform.tfstate
+infra/compute_vm/terraform.tfvars
+infra/compute_vm/terraform.tfstate.backup
+
+infra/cloud_run/.terraform/
+infra/cloud_run/.terraform.lock.hcl
+infra/cloud_run/terraform.tfstate
+infra/cloud_run/terraform.tfvars
+infra/cloud_run/terraform.tfstate.backup
+infra/cloud_run/.terraform.tfstate.lock.info
