@@ -7,9 +7,6 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     # mount source for live editing but keep container node_modules
-    volumes:
-      - ./frontend:/app:cached
-      - /app/node_modules
     ports:
       - "3000:5173"
     volumes:
@@ -62,5 +59,5 @@ services:
     #   timeout: 3s
     #   retries: 10
 
-# docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml up -d --build
+# docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml --env-file .env.prod up -d --build
 # docker compose -f docker-compose.yml -f docker-compose.overwrite.dev.yml down

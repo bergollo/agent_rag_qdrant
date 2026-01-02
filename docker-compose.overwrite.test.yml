@@ -7,7 +7,7 @@ services:
     command: ["npm", "run", "test:e2e"]
 
   backend:
-    command: ["pytest", "tests"]
+    command: ["npm", "run", "test"]
 
   ai_service:
     command: ["pytest", "tests"]
