@@ -14,7 +14,7 @@ resource "google_cloud_run_v2_service_iam_member" "ai_invoker_backend" {
   location = google_cloud_run_v2_service.backend.location
   role     = "roles/run.invoker"
   # member   = "serviceAccount:${google_service_account.run_backend.email}"
-  member   = "allUsers" # Uncomment to make Backend public
+  member   = "allUsers" # Uncomment to make Backend public 
 }
 
 # AI Service Cloud Run service made internal only (invokable by Backend service)
