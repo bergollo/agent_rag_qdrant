@@ -1,0 +1,33 @@
+project_name = "rag-stack-chatbot"
+aws_region   = "us-east-1"
+
+# Networking (set these to your real IDs)
+vpc_id    = "vpc-xxxxxxxx"
+subnet_id = "subnet-xxxxxxxx"
+
+instance_type = "t3.medium" # t3.micro is free tier
+
+# SSH (optional)
+allow_ssh = true
+ssh_cidr  = "YOUR.IP.ADDR.ESS/32"
+key_name  = "my-ec2-keypair"
+
+# ECR
+ecr_registry = "035971186236.dkr.ecr.us-east-1.amazonaws.com"
+ecr_repo_arns = [
+  "arn:aws:ecr:us-east-1:035971186236:repository/frontend",
+  "arn:aws:ecr:us-east-1:035971186236:repository/backend",
+  "arn:aws:ecr:us-east-1:035971186236:repository/ai_service",
+  "arn:aws:ecr:us-east-1:035971186236:repository/redaction_gate",
+]
+
+# Deploy a specific tag (or leave "latest")
+image_tag = "latest"
+
+# Secrets (for now; better: SSM Parameter Store / Secrets Manager)
+openai_api_key = "REPLACE_ME"
+
+tags = {
+  ManagedBy = "terraform"
+  Project   = "my-monorepo"
+}

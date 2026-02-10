@@ -22,21 +22,39 @@ build/
 dist/
 
 # Terraform Files
-infra/google_artifact_registry/.terraform/
-infra/google_artifact_registry/.terraform.lock.hcl
-infra/google_artifact_registry/terraform.tfstate
-infra/google_artifact_registry/terraform.tfvars
-infra/google_artifact_registry/terraform.tfstate.backup
+# Google Cloud Platform
+infra/gcp/google_artifact_registry/.terraform/
+infra/gcp/google_artifact_registry/.terraform.lock.hcl
+infra/gcp/google_artifact_registry/terraform.tfstate
+infra/gcp/google_artifact_registry/terraform.tfvars
+infra/gcp/google_artifact_registry/terraform.tfstate.backup
 
-infra/compute_vm/.terraform/
-infra/compute_vm/.terraform.lock.hcl
-infra/compute_vm/terraform.tfstate
-infra/compute_vm/terraform.tfvars
-infra/compute_vm/terraform.tfstate.backup
+infra/gcp/compute_vm/.terraform/
+infra/gcp/compute_vm/.terraform.lock.hcl
+infra/gcp/compute_vm/terraform.tfstate
+infra/gcp/compute_vm/terraform.tfvars
+infra/gcp/compute_vm/terraform.tfstate.backup
 
-infra/cloud_run/.terraform/
-infra/cloud_run/.terraform.lock.hcl
-infra/cloud_run/terraform.tfstate
-infra/cloud_run/terraform.tfvars
-infra/cloud_run/terraform.tfstate.backup
-infra/cloud_run/.terraform.tfstate.lock.info
+infra/gcp/cloud_run/.terraform/
+infra/gcp/cloud_run/.terraform.lock.hcl
+infra/gcp/cloud_run/terraform.tfstate
+infra/gcp/cloud_run/terraform.tfvars
+infra/gcp/cloud_run/terraform.tfstate.backup
+infra/gcp/cloud_run/.terraform.tfstate.lock.info
+
+# AWS
+# ECR
+infra/aws/artifact_registry/.terraform/
+infra/aws/artifact_registry/.terraform.lock.hcl
+infra/aws/artifact_registry/terraform.tfstate
+infra/aws/artifact_registry/terraform.tfvars
+infra/aws/artifact_registry/terraform.tfstate.backup
+infra/aws/artifact_registry/.terraform.tfstate.lock.info
+
+# EC2
+infra/aws/ec2/.terraform/
+infra/aws/ec2/.terraform.lock.hcl
+infra/aws/ec2/terraform.tfstate
+infra/aws/ec2/terraform.tfvars
+infra/aws/ec2/terraform.tfstate.backup
+infra/aws/ec2/.terraform.tfstate.lock.info

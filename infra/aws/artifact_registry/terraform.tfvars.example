@@ -1,0 +1,14 @@
+project_name = "rag-stack-chatbot"
+aws_region   = "us-east-1"
+
+github_org   = "bergollo"
+github_repo  = "agent_rag_qdrant"
+
+allowed_branches = ["main", "dev"]
+
+repositories = [
+  "redaction_gate",
+  "ai_service",
+  "backend",
+  "frontend"
+]
