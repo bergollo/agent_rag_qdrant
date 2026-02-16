@@ -14,7 +14,7 @@ import { FilesModule } from './modules/files/files.module';
     // Load environment variables once, making ConfigService available app-wide.
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig] ,
+      load: [appConfig],
       envFilePath: '.env',
     }),
     HealthModule,

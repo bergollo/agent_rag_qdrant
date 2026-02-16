@@ -41,9 +41,7 @@ type QueryResponse = {
 @ApiTags('/api/healthz')
 @Controller('healthz')
 export class HealthController {
-  constructor(
-    private readonly healthService: HealthService,
-  ) {}
+  constructor(private readonly healthService: HealthService) {}
 
   @Get()
   async getPing(): Promise<Record<string, any>> {

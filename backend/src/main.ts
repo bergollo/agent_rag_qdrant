@@ -5,9 +5,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-    const configService = app.get(ConfigService);
+  const configService = app.get(ConfigService);
 
-    const config = new DocumentBuilder()
+  const config = new DocumentBuilder()
     .setTitle('BACKEND API')
     .setDescription('The BACKEND API description')
     .setVersion('1.0')
