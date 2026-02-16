@@ -27,7 +27,8 @@ services:
     ports:
       - "8000:8080"
     volumes:
-      - ./backend:/app:z
+      - ./backend/src:/app/src:z
+      # - ./backend/node_modules:/app/node_modules:z
     environment:
       - ENV:development
       - DEBUG:True

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AppService {
+export class AiService {
   // Holds the resolved base URL for the AI service so callers do not re-read config.
   private readonly AI_SERVICE_URL: string;
 

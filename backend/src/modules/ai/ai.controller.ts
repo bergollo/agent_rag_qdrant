@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import FormData from 'form-data';
 import type { Express } from 'express';
 import type { AxiosResponse } from 'axios';
-import { AppService } from './app.service';
+import { AiService } from './ai.service';
 import 'multer';
 
 type HealthzResponse = {
@@ -29,24 +29,19 @@ type QueryResponse = {
 type VectorstoreUploadResponse = unknown; // or define a real shape if you know it
 
 @Controller()
-export class AppController {
+export class AiController {
   constructor(
-    private readonly appService: AppService,
+    private readonly aiService: AiService,
     private readonly httpService: HttpService,
   ) {}
-
-  @Get('/api/healthz')
-  getPing(): object {
-    return this.appService.getPing();
-  }
 
   @Get('/api/ai/healthz')
   async getAiPing(): Promise<HealthzResponse> {
     console.log(
-      `Proxying health check to AI service at ${this.appService.getAiServiceUrl()}`,
+      `Proxying health check to AI service at ${this.aiService.getAiServiceUrl()}`,
     );
 
-    const internalUrl = `${this.appService.getAiServiceUrl()}/healthz`;
+    const internalUrl = `${this.aiService.getAiServiceUrl()}/healthz`;
 
     const res: AxiosResponse<HealthzResponse> = await firstValueFrom(
       this.httpService.get<HealthzResponse>(internalUrl),
@@ -60,7 +55,7 @@ export class AppController {
   async uploadVectorStore(
     @UploadedFile() file: Express.Multer.File,
   ): Promise<VectorstoreUploadResponse> {
-    const internalServiceUrl = `${this.appService.getAiServiceUrl()}/v1/vectorstore/upload`;
+    const internalServiceUrl = `${this.aiService.getAiServiceUrl()}/v1/vectorstore/upload`;
 
     const formData = new FormData();
     formData.append('file', file.buffer, {
@@ -85,7 +80,7 @@ export class AppController {
 
   @Post('/api/ai/query')
   async queryAi(@Body('query') query: string): Promise<QueryResponse> {
-    const internalUrl = `${this.appService.getAiServiceUrl()}/v1/query`;
+    const internalUrl = `${this.aiService.getAiServiceUrl()}/v1/query`;
 
     const res: AxiosResponse<QueryResponse> = await firstValueFrom(
       this.httpService.post<QueryResponse>(internalUrl, { query }),
